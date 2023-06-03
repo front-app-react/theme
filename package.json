@@ -1,0 +1,33 @@
+{
+  "name": "@front-app-react/theme",
+  "version": "1.0.5",
+  "private": false,
+  "description": "This package is a powerful tool for designing and managing the style and language of react applications, which helps developers to easily and with minimal effort create custom designs and user interfaces.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/front-app-react/theme"
+  },
+  "keywords": [
+    "theme react",
+    "theme managment",
+    "multi language react",
+    "multi theme color react",
+    "react application",
+    "front app react"
+  ],
+  "author": "Mahdi Ahmad Khan Beigi <mahdi.khanbeigi@yahoo.com>",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "styled-components": "^5.3.5"
+  },
+  "files": [
+    "src/**"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "browser": "src/index.umd.min.js",
+  "main": "src/index.min.js",
+  "module": "src/index.es.min.js",
+  "types": "src/index.d.ts"
+}
