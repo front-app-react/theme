@@ -1,6 +1,6 @@
 {
   "name": "@front-app-react/theme",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "private": false,
   "description": "This package is a powerful tool for designing and managing the style and language of react applications, which helps developers to easily and with minimal effort create custom designs and user interfaces.",
   "repository": {
@@ -20,14 +20,13 @@
     "react": "^18.2.0",
     "styled-components": "^5.3.5"
   },
-  "files": [
-    "src/**"
-  ],
+  "main": "src/index.js",
+  "module": "src/index.es.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "build": "tsc"
   },
-  "browser": "src/index.umd.min.js",
-  "main": "src/index.min.js",
-  "module": "src/index.es.min.js",
-  "types": "src/index.d.ts"
+  "files": [
+    "**"
+  ]
 }

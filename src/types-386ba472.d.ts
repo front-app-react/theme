@@ -1,6 +1,3 @@
-import React, { PropsWithChildren } from 'react';
-import * as styled_components from 'styled-components';
-
 declare enum IMoodColor {
     lightest = -2,
     lighter = -1,
@@ -88,32 +85,4 @@ interface ThemeColor {
     active?: Partial<Color>;
 }
 
-type IColorRgb = {
-    r: number;
-    g: number;
-    b: number;
-};
-declare function convertRgb(color: string): IColorRgb;
-declare function lightenDarkenColor(rgb: IColorRgb, amt: number, opacity: number): string;
-
-declare const defaultFetch: <T>(code: "sizing" | string, type?: "lang" | "color") => Promise<T>;
-
-declare const useLang: (prefix: string, storage: Storage, fetch: ContextAsync<IDictionary>["fetch"]) => IUseLang;
-
-declare const useStyle: (prefix: string, storage: Storage, fetchColor: ContextAsync<IColor>["fetch"], sizing: DefaultSizing) => IUseStyle;
-
-interface ThemeProviderProps {
-    prefix: string;
-    storage?: Storage;
-    readonly defaultLang: DefaultContextWithName<IDictionary>;
-    readonly defaultColor: DefaultContextWithName<IColor>;
-    readonly defaultSizing?: DefaultSizing;
-}
-interface DefaultFetch<T> {
-    (code: "sizing" | string, type: "lang" | "color"): Promise<T>;
-}
-declare const ThemeProvider: ({ children, prefix, storage, defaultLang, defaultColor, defaultSizing, }: PropsWithChildren<ThemeProviderProps>) => React.JSX.Element;
-
-declare const useTheme: () => styled_components.DefaultTheme;
-
-export { Color, ContextAsync, DefaultContext, DefaultContextWithName, DefaultFetch, DefaultSizing, IColor, IDictionary, ILang, IMoodColor, ISizing, IStyle, IUseLang, IUseStyle, OnContextAsync, StorageTheme, ThemeColor, ThemeInterface, ThemeProvider, ThemeProviderProps, ThemeStorage, convertRgb, defaultFetch, lightenDarkenColor, useLang, useStyle, useTheme };
+export { Color as C, DefaultSizing as D, IDictionary as I, OnContextAsync as O, StorageTheme as S, ThemeColor as T, ContextAsync as a, IUseLang as b, IColor as c, IUseStyle as d, DefaultContextWithName as e, IMoodColor as f, ThemeStorage as g, DefaultContext as h, ISizing as i, IStyle as j, ILang as k, ThemeInterface as l };
