@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import {
-  convertRgb,
-  lightenDarkenColor,
   IUseStyle,
   IStyle,
   IColor,
   DefaultSizing,
   ContextAsync,
 } from "../index";
+import { convertRgb, lightenDarkenColor } from "../utility/utilityColor";
 
 export const useStyle = (
   prefix: string,

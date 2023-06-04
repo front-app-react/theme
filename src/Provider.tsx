@@ -8,9 +8,9 @@ import {
   ThemeStorage,
   DefaultSizing,
   DefaultContextWithName,
-  defaultFetch,
   ISizing,
 } from "./index";
+import { defaultFetch } from "./utility/defaultFetch";
 
 export interface ThemeProviderProps {
   prefix: string;
