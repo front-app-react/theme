@@ -113,6 +113,22 @@ import { useTheme } from "@front-app-react/theme";
 | onChange      | (`code` or `SizingData`)=> Promise<SizingData> | It can change the color with two input types - The name of the color file - color data |
 | getColor      | name,mood,opacity                              | Get color value from color name in 5 levels 0,1,2,3,4 and opacity                      |
 
+## Type Color
+
+| property | value                 |
+| -------- | --------------------- |
+| name     | string                |
+| opacity  | between 0,1           |
+| mood     | `-2`,`-1`,`0`,`1`,`2` |
+
+## Type ThemeColor
+
+| property   | value                                                             |
+| ---------- | ----------------------------------------------------------------- |
+| variant \* | [Type Color](https://github.com/front-app-react/theme#type-color) |
+| hover      | [Type Color](https://github.com/front-app-react/theme#type-color) |
+| active     | [Type Color](https://github.com/front-app-react/theme#type-color) |
+
 ## Packages
 
 List of packages used:
@@ -312,9 +328,9 @@ const ButtonWithoutStyleActions = styled("button")`
 type object
 | property | description |
 |--|--|
-| $textColor |[ThemeColor](https://github.com/front-app-react/elements)
-| $bgColor | [ThemeColor](https://github.com/front-app-react/elements)
-| $borderColor | [ThemeColor](https://github.com/front-app-react/elements)
+| $textColor |[ThemeColor](https://github.com/front-app-react/theme#type-themecolor)
+| $bgColor | [ThemeColor](https://github.com/front-app-react/theme#type-themecolor)
+| $borderColor | [ThemeColor](https://github.com/front-app-react/theme#type-themecolor)
 | $isActive | type boolean, handle active mode
 
 ### Argument 2
