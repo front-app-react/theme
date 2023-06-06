@@ -1,5 +1,10 @@
-import { a as ContextAsync, I as IDictionary, b as IUseLang, c as IColor, D as DefaultSizing, d as IUseStyle, e as DefaultContextWithName } from './types-386ba472.js';
-export { C as Color, h as DefaultContext, k as ILang, f as IMoodColor, i as ISizing, j as IStyle, O as OnContextAsync, S as StorageTheme, T as ThemeColor, l as ThemeInterface, g as ThemeStorage } from './types-386ba472.js';
+import { C as ContextAsync, I as IDictionary, a as IUseLang, b as IColor, D as DefaultSizing, c as IUseStyle, d as DefaultContextWithName } from './types-85d50e19.js';
+export { k as Color, f as DefaultContext, i as ILang, e as IMoodColor, g as ISizing, h as IStyle, O as OnContextAsync, S as StorageTheme, l as ThemeColor, j as ThemeInterface, T as ThemeStorage } from './types-85d50e19.js';
+export { convertRgb, lightenDarkenColor } from './utilityColor.min.js';
+export { defaultFetch } from './defaultFetch.min.js';
+export { CheckSizing, CheckSizingProps, checkSizing } from './checkSizing.min.js';
+export { ColorHandler, ColorHandlerProps, colorHandler } from './colorHandler.min.js';
+export { GetColorWithKeyCss, getColorWithKeyCss } from './getColorWithKeyCss.min.js';
 import React, { PropsWithChildren } from 'react';
 import * as styled_components from 'styled-components';
 
@@ -7,7 +12,7 @@ declare const useLang: (prefix: string, storage: Storage, fetch: ContextAsync<ID
 
 declare const useStyle: (prefix: string, storage: Storage, fetchColor: ContextAsync<IColor>["fetch"], sizing: DefaultSizing) => IUseStyle;
 
-interface ThemeProviderProps {
+interface ThemeProviderProps extends Record<string, any> {
     prefix: string;
     storage?: Storage;
     readonly defaultLang: DefaultContextWithName<IDictionary>;
@@ -17,7 +22,7 @@ interface ThemeProviderProps {
 interface DefaultFetch<T> {
     (code: "sizing" | string, type: "lang" | "color"): Promise<T>;
 }
-declare const ThemeProvider: ({ children, prefix, storage, defaultLang, defaultColor, defaultSizing, }: PropsWithChildren<ThemeProviderProps>) => React.JSX.Element;
+declare const ThemeProvider: ({ children, prefix, storage, defaultLang, defaultColor, defaultSizing, ...others }: PropsWithChildren<ThemeProviderProps>) => React.JSX.Element;
 
 declare const useTheme: () => styled_components.DefaultTheme;
 

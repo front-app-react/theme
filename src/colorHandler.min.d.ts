@@ -1,5 +1,5 @@
 import { StyledProps } from 'styled-components';
-import { T as ThemeColor } from './types-386ba472.js';
+import { l as ThemeColor } from './types-85d50e19.js';
 
 interface ColorHandlerProps {
     $textColor?: Partial<ThemeColor>;

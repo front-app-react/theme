@@ -66,7 +66,7 @@ interface ILang {
 interface IUseLang extends ILang {
     readonly onChange: (code: string | IDictionary) => Promise<IDictionary>;
 }
-interface ThemeInterface {
+interface ThemeInterface extends Record<string, any> {
     readonly style: IUseStyle;
     readonly lang: IUseLang;
 }
@@ -85,4 +85,4 @@ interface ThemeColor {
     active?: Partial<Color>;
 }
 
-export { Color as C, DefaultSizing as D, IDictionary as I, OnContextAsync as O, StorageTheme as S, ThemeColor as T, ContextAsync as a, IUseLang as b, IColor as c, IUseStyle as d, DefaultContextWithName as e, IMoodColor as f, ThemeStorage as g, DefaultContext as h, ISizing as i, IStyle as j, ILang as k, ThemeInterface as l };
+export { ContextAsync as C, DefaultSizing as D, IDictionary as I, OnContextAsync as O, StorageTheme as S, ThemeStorage as T, IUseLang as a, IColor as b, IUseStyle as c, DefaultContextWithName as d, IMoodColor as e, DefaultContext as f, ISizing as g, IStyle as h, ILang as i, ThemeInterface as j, Color as k, ThemeColor as l };

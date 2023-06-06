@@ -1,5 +1,5 @@
 import { StyledProps } from 'styled-components';
-import { C as Color } from './types-386ba472.js';
+import { k as Color } from './types-85d50e19.js';
 
 interface GetColorWithKeyCss {
     name: string;

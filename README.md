@@ -117,9 +117,9 @@ import { useTheme } from "@front-app-react/theme";
 
 List of packages used:
 
-- checkSizing - for package @front-app-react/theme Getting the defined sizes of the theme
-- getColorWithKeyCss - for package @front-app-react/theme Make css color style from the theme
-- colorHandler - for package @front-app-react/theme Making theme coloring styles element
+- checkSizing - Getting the defined sizes of the theme
+- getColorWithKeyCss - Make css color style from the theme
+- colorHandler - Making theme coloring styles element
 
 ## _checkSizing_
 
