@@ -10,6 +10,8 @@ node_modules
 build
 lib
 /lib
+github
+/github
 
 tsconfig.tsbuildinfo
 

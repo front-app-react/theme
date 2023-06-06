@@ -6,7 +6,7 @@ support type ThemeDefault styled-components
 
 ## Demo
 
-demo for using [demo-front-app-react](https://mahdikhanbeigi.github.io/demo-front-app-react/)
+demo for using [demo-front-app-react](https://github.com/front-app-react/demo)
 
 ## Installing
 
