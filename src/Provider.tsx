@@ -12,12 +12,13 @@ import {
 } from "./index";
 import { defaultFetch } from "./utility/defaultFetch";
 
-export interface ThemeProviderProps {
+export interface ThemeProviderProps extends Record<string, any> {
   prefix: string;
   storage?: Storage;
   readonly defaultLang: DefaultContextWithName<IDictionary>;
   readonly defaultColor: DefaultContextWithName<IColor>;
   readonly defaultSizing?: DefaultSizing;
+  // readonly defaultSizing?: DefaultSizing;
 }
 
 export interface DefaultFetch<T> {
@@ -31,6 +32,7 @@ export const ThemeProvider = ({
   defaultLang,
   defaultColor,
   defaultSizing,
+  ...others
 }: PropsWithChildren<ThemeProviderProps>) => {
   const style = useStyle(
     prefix,
@@ -106,6 +108,7 @@ export const ThemeProvider = ({
       theme={{
         style,
         lang,
+        others,
       }}
     >
       {children}

@@ -92,7 +92,7 @@ export interface IUseLang extends ILang {
   readonly onChange: (code: string | IDictionary) => Promise<IDictionary>;
 }
 
-export interface ThemeInterface {
+export interface ThemeInterface extends Record<string, any> {
   readonly style: IUseStyle;
   readonly lang: IUseLang;
 }
