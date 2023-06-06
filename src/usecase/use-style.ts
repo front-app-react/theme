@@ -63,8 +63,6 @@ export const useStyle = (
   const getColor: IUseStyle["getColor"] = useCallback(
     (name, mood, opacity) => {
       if (name === "transparent") return "transparent";
-      console.log({ state });
-
       const rgbaColor = convertRgb(
         state.color && name ? state.color.data[name] : "#000000"
       );
@@ -99,11 +97,9 @@ export const useStyle = (
     if (typeof code === "string") {
       try {
         data = await fetchColor(code);
-        console.log("color async 1");
       } catch (e) {}
     } else {
       data = code;
-      console.log("color 1");
     }
     storage.setItem(prefix + "-color", (data as any).name || state.color);
     setState((prev) => ({
@@ -111,7 +107,6 @@ export const useStyle = (
       color: data as IColor,
       loadingColor: false,
     }));
-    console.log("color async 2");
 
     return data || state.color;
   };

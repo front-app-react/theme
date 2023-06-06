@@ -27,11 +27,9 @@ export const useLang = (
     if (typeof code === "string") {
       try {
         data = await fetch(code);
-        console.log("lang async 1");
       } catch (e) {}
     } else {
       data = code;
-      console.log("lang 1");
     }
     storage.setItem(
       prefix + "-lang",
@@ -43,7 +41,6 @@ export const useLang = (
       dictionary: data as IDictionary,
       loading: false,
     }));
-    console.log("lang async 2");
 
     return data || state.dictionary;
   };

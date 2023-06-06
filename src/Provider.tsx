@@ -108,7 +108,7 @@ export const ThemeProvider = ({
       theme={{
         style,
         lang,
-        others,
+        ...others,
       }}
     >
       {children}
