@@ -6,7 +6,7 @@ support type ThemeDefault styled-components
 
 ## Demo
 
-demo for using [demo-front-app-react](https://github.com/mahdikhanbeigi/demo-front-app-react)
+demo for using [demo-front-app-react](https://mahdikhanbeigi.github.io/demo-front-app-react/)
 
 ## Installing
 
@@ -143,8 +143,7 @@ List of packages used:
 
 Sizes such as padding and radius are defined in the @front-app-react/theme package.
 We can create normal, small, and large sizes with the style name
-It is necessary to talk about the configuration sizing of the package [@front-app-react/theme](https://www.npmjs.com/package/@front-app-react/theme)
-Sample using in https://github.com/front-app-react/elements
+Sample using in https://github.com/front-app-react/elements (coming)
 
 ### Usage
 
@@ -193,7 +192,6 @@ The output value is property: value in css
 ### Description
 
 Make css color style from the theme
-It is necessary to talk about the configuration color of the package [@front-app-react/theme](https://www.npmjs.com/package/@front-app-react/theme)
 
 ### Usage
 
