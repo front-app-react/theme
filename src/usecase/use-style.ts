@@ -94,19 +94,20 @@ export const useStyle = (
       loadingColor: true,
     }));
     let data: IColor | undefined;
+
     if (typeof code === "string") {
       try {
-        data = await fetchColor(code);
+        data = await fetchColor(code).then((data) => {
+          storage.setItem(prefix + "-color", (data as any).name || state.color);
+          setState((prev) => ({
+            ...prev,
+            color: data as IColor,
+            loadingColor: false,
+          }));
+          return data;
+        });
       } catch (e) {}
-    } else {
-      data = code;
     }
-    storage.setItem(prefix + "-color", (data as any).name || state.color);
-    setState((prev) => ({
-      ...prev,
-      color: data as IColor,
-      loadingColor: false,
-    }));
 
     return data || state.color;
   };

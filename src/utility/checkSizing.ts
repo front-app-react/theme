@@ -1,5 +1,5 @@
-import { StyledProps } from "styled-components";
 import { objectByString } from "@front-app-react/constants";
+import { StyledProps } from "styled-components";
 
 export interface CheckSizingProps {
   $sizing?: "sm" | "lg";

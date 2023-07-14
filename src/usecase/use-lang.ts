@@ -24,24 +24,22 @@ export const useLang = (
       loading: true,
     }));
     let data: IDictionary | undefined;
-    if (typeof code === "string") {
-      try {
-        data = await fetch(code);
-      } catch (e) {}
-    } else {
-      data = code;
-    }
-    storage.setItem(
-      prefix + "-lang",
-      (data as IDictionary)?.["theme.locale"] ||
-        state.dictionary["theme.locale"]
-    );
-    setState((prev) => ({
-      ...prev,
-      dictionary: data as IDictionary,
-      loading: false,
-    }));
 
+    if (typeof code === "string") {
+      data = await fetch(code).then((data) => {
+        storage.setItem(
+          prefix + "-lang",
+          (data as IDictionary)?.["theme.locale"] ||
+            state.dictionary["theme.locale"]
+        );
+        setState((prev) => ({
+          ...prev,
+          dictionary: data as IDictionary,
+          loading: false,
+        }));
+        return data;
+      });
+    }
     return data || state.dictionary;
   };
 

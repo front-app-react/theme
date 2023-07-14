@@ -1,6 +1,6 @@
 {
   "name": "@front-app-react/theme",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "private": false,
   "description": "This package is a powerful tool for designing and managing the style and language of react applications, which helps developers to easily and with minimal effort create custom designs and user interfaces.",
   "repository": {
@@ -23,8 +23,7 @@
   "module": "lib/src/index.es.min.js",
   "types": "lib/src/index.min.d.ts",
   "scripts": {
-    "build:tsc": "tsc",
-    "build": "app-rollup-cli --config rollup/config.json"
+    "build:tsc": "tsc"
   },
   "peerDependencies": {
     "react": "^18.2.0",
