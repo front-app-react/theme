@@ -6,19 +6,23 @@ import {
   IDictionary,
   IColor,
   ThemeStorage,
-  DefaultSizing,
-  DefaultContextWithName,
   ISizing,
+  OnContextAsync,
+  OnContextAsyncCode,
 } from "./index";
 import { defaultFetch } from "./utility/defaultFetch";
 
 export interface ThemeProviderProps extends Record<string, any> {
   prefix: string;
   storage?: Storage;
-  readonly defaultLang: DefaultContextWithName<IDictionary>;
-  readonly defaultColor: DefaultContextWithName<IColor>;
-  readonly defaultSizing?: DefaultSizing;
+  readonly defaultLang: string | IDictionary;
+  readonly defaultColor: string | IColor;
+  readonly defaultSizing?: ISizing;
   // readonly defaultSizing?: DefaultSizing;
+
+  fetchLang?: OnContextAsyncCode<IDictionary>;
+  fetchColor?: OnContextAsyncCode<IColor>;
+  fetchSizing?: OnContextAsync<ISizing>;
 }
 
 export interface DefaultFetch<T> {
@@ -27,80 +31,54 @@ export interface DefaultFetch<T> {
 
 export const ThemeProvider = ({
   children,
-  prefix,
-  storage = new ThemeStorage(),
+  prefix = "app",
+  storage,
   defaultLang,
   defaultColor,
   defaultSizing,
+  fetchLang = (code) => {
+    return defaultFetch<IDictionary>(code, "lang");
+  },
+  fetchColor = (code) => {
+    return defaultFetch<IColor>(code, "color");
+  },
+  fetchSizing = () => {
+    return defaultFetch<ISizing>("sizing");
+  },
   ...others
 }: PropsWithChildren<ThemeProviderProps>) => {
-  const style = useStyle(
-    prefix,
-    storage,
-    typeof defaultColor !== "function" || typeof defaultColor === "string"
-      ? (code) => {
-          return defaultFetch<IColor>(code, "color");
-        }
-      : defaultColor,
-    typeof defaultSizing === "undefined"
-      ? () => {
-          return defaultFetch<ISizing>("sizing");
-        }
-      : defaultSizing
-  );
-  const lang = useLang(
-    prefix,
-    storage,
-    typeof defaultLang !== "function" || typeof defaultLang === "string"
-      ? (code) => {
-          return defaultFetch<IDictionary>(code, "lang");
-        }
-      : defaultLang
-  );
+  const style = useStyle(prefix, fetchColor, fetchSizing, storage);
+  const lang = useLang(prefix, fetchLang, storage);
 
   useEffect(() => {
-    let mounted = false;
-    const checkDefault = async () => {
-      const langLocal = storage.getItem(prefix + "-lang"),
-        colorLocal = storage.getItem(prefix + "-color");
+    const langLocal = storage?.getItem(prefix + "-lang"),
+      colorLocal = storage?.getItem(prefix + "-color");
 
+    if (typeof defaultLang === "object") {
+      lang.onChange(defaultLang);
+    } else {
       if (langLocal) {
         lang.onChange(langLocal);
-      } else {
-        if (
-          typeof defaultLang === "object" &&
-          defaultLang.fetch &&
-          typeof defaultLang.fetch === "function"
-        ) {
-          const data = await defaultLang.fetch(defaultLang.value);
-          lang.onChange(data);
-        } else {
-          lang.onChange(defaultLang as any);
-        }
+      } else if (defaultLang) {
+        lang.onChange(defaultLang);
       }
-      if (colorLocal) {
-        style.onChange(colorLocal);
-      } else {
-        const _defaultColor = defaultColor as any;
-        if (
-          typeof defaultColor === "object" &&
-          _defaultColor.fetch &&
-          typeof _defaultColor.fetch === "function"
-        ) {
-          const data = await _defaultColor.fetch(_defaultColor.value);
-          style.onChange(data);
-        } else {
-          style.onChange(_defaultColor as any);
-        }
-      }
-    };
-    if (!mounted) {
-      checkDefault();
     }
 
-    return () => {
-      mounted = true;
-    };
+    if (typeof defaultSizing === "object") {
+      style.onChangeSizing(defaultSizing);
+    } else {
+      style.onChangeSizing();
+    }
+
+    if (typeof defaultColor === "object") {
+      style.onChange(defaultColor);
+    } else {
+      if (colorLocal) {
+        style.onChange(colorLocal);
+      } else if (defaultLang) {
+        style.onChange(defaultColor);
+      }
+    }
   }, []);
 
   return (

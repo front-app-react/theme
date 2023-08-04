@@ -5,7 +5,7 @@ export enum IMoodColor {
   darker,
   darkest,
 }
-export class ThemeStorage implements Storage {
+export class ThemeStorage extends Storage {
   private _data: Record<string, string> = {};
 
   public clear(): void {
@@ -37,15 +37,18 @@ export interface StorageTheme {
   locale: string;
   lang: string;
 }
-export interface OnContextAsync<T> {
+export interface OnContextAsyncCode<T> {
   (code: string): Promise<T>;
 }
-export interface ContextAsync<T> {
-  value: string;
-  fetch: OnContextAsync<T>;
+export interface OnContextAsync<T> {
+  (): Promise<T>;
 }
-export type DefaultContext<T> = ContextAsync<T> | T;
-export type DefaultContextWithName<T> = string | DefaultContext<T>;
+// export interface ContextAsync<T> {
+//   value: string;
+//   fetch: OnContextAsync<T>;
+// }
+// export type DefaultContext<T> = ContextAsync<T> | T;
+// export type DefaultContextWithName<T> = string | DefaultContext<T>;
 export interface IColor {
   name: string;
   data: Record<string, string>;
@@ -66,10 +69,11 @@ export interface IStyle {
   loadingSizing: boolean;
   loading: boolean;
 }
-export type DefaultSizing = (() => Promise<ISizing>) | ISizing;
+// export type DefaultSizing = (() => Promise<ISizing>) | ISizing;
 
 export interface IUseStyle extends IStyle {
   readonly onChange: (code: string | IColor) => Promise<IColor>;
+  readonly onChangeSizing: (sizing?: ISizing) => Promise<ISizing>;
   readonly getColor: (
     name?: string,
     mood?: IMoodColor,

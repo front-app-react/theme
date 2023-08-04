@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ContextAsync, IDictionary, ILang, IUseLang } from "../index";
+import { IDictionary, ILang, IUseLang, OnContextAsyncCode } from "../index";
 
 const INITIAL_DIC: IDictionary = {
   "theme.dir": "ltr",
@@ -10,8 +10,8 @@ const INITIAL_DIC: IDictionary = {
 
 export const useLang = (
   prefix: string,
-  storage: Storage,
-  fetch: ContextAsync<IDictionary>["fetch"]
+  fetchLang: OnContextAsyncCode<IDictionary>,
+  storage?: Storage
 ): IUseLang => {
   const [state, setState] = useState<ILang>({
     dictionary: INITIAL_DIC,
@@ -23,23 +23,21 @@ export const useLang = (
       ...prev,
       loading: true,
     }));
-    let data: IDictionary | undefined;
+    let data = state.dictionary;
 
     if (typeof code === "string") {
-      data = await fetch(code).then((data) => {
-        storage.setItem(
-          prefix + "-lang",
-          (data as IDictionary)?.["theme.locale"] ||
-            state.dictionary["theme.locale"]
-        );
-        setState((prev) => ({
-          ...prev,
-          dictionary: data as IDictionary,
-          loading: false,
-        }));
-        return data;
-      });
+      try {
+        data = await fetchLang(code);
+      } catch (e) {}
+    } else {
+      data = code;
     }
+    setState((prev) => ({
+      ...prev,
+      dictionary: data,
+      loading: false,
+    }));
+    storage?.setItem(prefix + "-lang", (data as IDictionary)?.["theme.locale"]);
     return data || state.dictionary;
   };
 

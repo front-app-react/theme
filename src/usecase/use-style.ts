@@ -3,62 +3,56 @@ import {
   IUseStyle,
   IStyle,
   IColor,
-  DefaultSizing,
-  ContextAsync,
+  OnContextAsync,
+  ISizing,
+  defaultFetch,
+  OnContextAsyncCode,
 } from "../index";
 import { convertRgb, lightenDarkenColor } from "../utility/utilityColor";
 
 export const useStyle = (
   prefix: string,
-  storage: Storage,
-  fetchColor: ContextAsync<IColor>["fetch"],
-  sizing: DefaultSizing
+  fetchColor: OnContextAsyncCode<IColor>,
+  fetchSizing: OnContextAsync<ISizing>,
+  storage?: Storage
 ): IUseStyle => {
   const [state, setState] = useState<IStyle>({
     color: {
       data: {},
       name: "",
     },
-    sizing:
-      typeof sizing !== "function"
-        ? sizing
-        : {
-            btn: {},
-            input: {},
-          },
-    loadingSizing: typeof sizing === "function",
+    sizing: Object(),
+    loadingSizing: true,
     loadingColor: true,
     loading: true,
   });
 
-  useEffect(() => {
-    if (typeof sizing === "function") {
-      let mounted = false;
-      if (!mounted) {
-        setState((prev) => ({
-          ...prev,
-          loadingSizing: true,
-        }));
-        sizing()
-          .then((data) => {
-            setState((prev) => ({
-              ...prev,
-              loadingSizing: false,
-              sizing: data,
-            }));
-          })
-          .catch((e) => {
-            setState((prev) => ({
-              ...prev,
-              loadingSizing: false,
-            }));
-          });
-        return () => {
-          mounted = true;
-        };
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   let mounted = false;
+  //   if (!mounted) {
+  //     setState((prev) => ({
+  //       ...prev,
+  //       loadingSizing: true,
+  //     }));
+  //     fetchSizing()
+  //       .then((data) => {
+  //         setState((prev) => ({
+  //           ...prev,
+  //           loadingSizing: false,
+  //           sizing: data,
+  //         }));
+  //       })
+  //       .catch((e) => {
+  //         setState((prev) => ({
+  //           ...prev,
+  //           loadingSizing: false,
+  //         }));
+  //       });
+  //     return () => {
+  //       mounted = true;
+  //     };
+  //   }
+  // }, []);
 
   const getColor: IUseStyle["getColor"] = useCallback(
     (name, mood, opacity) => {
@@ -93,29 +87,48 @@ export const useStyle = (
       ...prev,
       loadingColor: true,
     }));
-    let data: IColor | undefined;
-
+    let data = state.color;
     if (typeof code === "string") {
       try {
-        data = await fetchColor(code).then((data) => {
-          storage.setItem(prefix + "-color", (data as any).name || state.color);
-          setState((prev) => ({
-            ...prev,
-            color: data as IColor,
-            loadingColor: false,
-          }));
-          return data;
-        });
+        data = await fetchColor(code);
+      } catch (e) {}
+    } else {
+      data = code;
+    }
+    storage?.setItem(prefix + "-color", data.name);
+    setState((prev) => ({
+      ...prev,
+      color: data,
+      loadingColor: false,
+    }));
+    return data;
+  };
+
+  const onChangeSizing = async (sizing?: ISizing) => {
+    setState((prev) => ({
+      ...prev,
+      loadingSizing: true,
+    }));
+    let data = sizing || state.sizing;
+    if (!sizing) {
+      try {
+        data = await fetchSizing();
       } catch (e) {}
     }
 
-    return data || state.color;
+    setState((prev) => ({
+      ...prev,
+      sizing: data,
+      loadingSizing: false,
+    }));
+    return data;
   };
 
   return {
     ...state,
     onChange,
     getColor,
+    onChangeSizing,
     loading: state.loadingColor && state.loadingSizing,
   };
 };
